@@ -42,5 +42,18 @@ public class TransacoesService {
         transacoes.add(dto);
         log.info("Transação adicionada com sucesso.");
     }
+    
+    public void LimparTransacoes() {
+        if (transacoes.isEmpty()) {
+            log.info("Nenhuma transação para limpar.");
+            return;
+        }
+
+        log.info("Limpando {} transações existentes", transacoes.size());
+        
+        transacoes.clear();
+
+        log.info("Limpeza de transações executada com sucesso");
+    }
 }
 
