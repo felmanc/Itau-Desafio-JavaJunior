@@ -3,9 +3,11 @@ package br.com.felmanc.apitransacao.controllers;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.felmanc.apitransacao.dtos.TransacaoDTO;
@@ -39,10 +41,11 @@ public class TransacaoController {
 		return ResponseEntity.status(HttpStatus.CREATED).build();
 	}
 
-    @DeleteMapping
+    @Operation(summary = "Limpar Transações")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Todas as informações foram apagadas com sucesso")
     })
+    @DeleteMapping
     public ResponseEntity<Void> LimparTransacoes() {
 
     	transacoesService.LimparTransacoes();
