@@ -7,11 +7,13 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import br.com.felmanc.apitransacao.dtos.TransacaoDTO;
-import br.com.felmanc.apitransacao.excecoes.TransacaoInvalidaException;
+import br.com.felmanc.apitransacao.exceptions.TransacaoInvalidaException;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
 @Service
+@RequiredArgsConstructor
+@Slf4j
 public class TransacoesService {
     
     private final List<TransacaoDTO> transacoes = new ArrayList<>();
@@ -55,5 +57,18 @@ public class TransacoesService {
 
         log.info("Limpeza de transações executada com sucesso");
     }
+
+    public List<TransacaoDTO> filtrarTransacoes(Long intervaloSegundos) {
+        log.info("Filtrando transações para os últimos {} segundos", intervaloSegundos);
+        OffsetDateTime limite = OffsetDateTime.now().minusSeconds(intervaloSegundos);
+
+        List<TransacaoDTO> transacoesFiltradas = transacoes.stream()
+                .filter(transacao -> transacao.dataHora().isAfter(limite))
+                .toList();
+
+        log.info("{} transações filtradas dentro do intervalo", transacoesFiltradas.size());
+        return transacoesFiltradas;
+    }
+
 }
 
