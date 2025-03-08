@@ -3,11 +3,9 @@ package br.com.felmanc.apitransacao.controllers;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.felmanc.apitransacao.dtos.TransacaoDTO;
@@ -17,15 +15,16 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
-
+import lombok.extern.slf4j.Slf4j;
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/transacao")
 @Tag(name = "Transacao", description = "Endpoints para gerenciar transações")
+@Slf4j
 public class TransacaoController {
 
-	private final TransacoesService transacoesService;
+    private final TransacoesService transacoesService;
 
     @Operation(summary = "Adicionar uma nova transação")
     @ApiResponses(value = {
@@ -34,12 +33,18 @@ public class TransacaoController {
             @ApiResponse(responseCode = "400", description = "Erro na requisição (JSON inválido ou erro de sintaxe)", content = {})
     })
     @PostMapping
-	public ResponseEntity<Void> AdicionarTransacao(@RequestBody TransacaoDTO dto) {
+    public ResponseEntity<Void> AdicionarTransacao(@RequestBody TransacaoDTO dto) {
+        log.info("Requisição para adicionar transação: {}", dto);
 
-		transacoesService.AdicionarTransacao(dto);
-
-		return ResponseEntity.status(HttpStatus.CREATED).build();
-	}
+        try {
+            transacoesService.AdicionarTransacao(dto);
+            log.info("Transação criada com sucesso: {}", dto);
+            return ResponseEntity.status(HttpStatus.CREATED).build();
+        } catch (Exception e) {
+            log.error("Erro ao adicionar transação: {}", dto, e);
+            throw e; // Rethrow or handle as needed
+        }
+    }
 
     @Operation(summary = "Limpar Transações")
     @ApiResponses(value = {
@@ -47,9 +52,15 @@ public class TransacaoController {
     })
     @DeleteMapping
     public ResponseEntity<Void> LimparTransacoes() {
+        log.info("Requisição para limpar transações");
 
-    	transacoesService.LimparTransacoes();
-
-    	return ResponseEntity.status(HttpStatus.OK).build();
+        try {
+            transacoesService.LimparTransacoes();
+            log.info("Todas as transações foram apagadas com sucesso.");
+            return ResponseEntity.status(HttpStatus.OK).build();
+        } catch (Exception e) {
+            log.error("Erro ao limpar transações", e);
+            throw e; // Rethrow or handle as needed
+        }
     }
 }
