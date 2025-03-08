@@ -1,4 +1,4 @@
-package br.com.felmanc.apitransacao.excecoes;
+package br.com.felmanc.apitransacao.exceptions;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;

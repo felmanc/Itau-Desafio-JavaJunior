@@ -21,13 +21,10 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @RequestMapping("/transacao")
 @Tag(name = "Transacao", description = "Endpoints para gerenciar transações")
-@ApiResponses(value = {
-    @ApiResponse(responseCode = "500", description = "Erro interno no servidor")
-})
 public class TransacaoController {
 
 	private final TransacoesService transacoesService;
-	
+
     @Operation(summary = "Adicionar uma nova transação")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Transação criada com sucesso"),
@@ -36,20 +33,20 @@ public class TransacaoController {
     })
     @PostMapping
 	public ResponseEntity<Void> AdicionarTransacao(@RequestBody TransacaoDTO dto) {
-		
+
 		transacoesService.AdicionarTransacao(dto);
-		
+
 		return ResponseEntity.status(HttpStatus.CREATED).build();
 	}
-    
+
     @DeleteMapping
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Todas as informações foram apagadas com sucesso")
-    })    
+    })
     public ResponseEntity<Void> LimparTransacoes() {
-    	
+
     	transacoesService.LimparTransacoes();
-    	
+
     	return ResponseEntity.status(HttpStatus.OK).build();
     }
 }
