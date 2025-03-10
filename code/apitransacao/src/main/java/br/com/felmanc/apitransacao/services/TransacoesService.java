@@ -18,7 +18,7 @@ public class TransacoesService {
     
     private final List<TransacaoDTO> transacoes = new ArrayList<>();
 
-    public void AdicionarTransacao(TransacaoDTO dto) {
+    public void adicionarTransacao(TransacaoDTO dto) {
         log.info("Adicionar transação: " + dto);
 
         if (dto.valor() == null) {
@@ -45,7 +45,7 @@ public class TransacoesService {
         log.info("Transação adicionada com sucesso.");
     }
     
-    public void LimparTransacoes() {
+    public void limparTransacoes() {
         if (transacoes.isEmpty()) {
             log.info("Nenhuma transação para limpar.");
             return;

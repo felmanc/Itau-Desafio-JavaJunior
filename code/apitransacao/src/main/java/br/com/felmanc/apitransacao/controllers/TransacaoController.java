@@ -33,10 +33,10 @@ public class TransacaoController {
             @ApiResponse(responseCode = "400", description = "Erro na requisição (JSON inválido ou erro de sintaxe)", content = {})
     })
     @PostMapping
-    public ResponseEntity<Void> AdicionarTransacao(@RequestBody TransacaoDTO dto) {
+    public ResponseEntity<Void> adicionarTransacao(@RequestBody TransacaoDTO dto) {
         log.info("Requisição para adicionar transação: {}", dto);
 
-        transacoesService.AdicionarTransacao(dto);
+        transacoesService.adicionarTransacao(dto);
         log.info("Transação criada com sucesso: {}", dto);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
@@ -46,10 +46,10 @@ public class TransacaoController {
             @ApiResponse(responseCode = "200", description = "Todas as informações foram apagadas com sucesso")
     })
     @DeleteMapping
-    public ResponseEntity<Void> LimparTransacoes() {
+    public ResponseEntity<Void> limparTransacoes() {
         log.info("Requisição para limpar transações");
 
-        transacoesService.LimparTransacoes();
+        transacoesService.limparTransacoes();
         log.info("Todas as transações foram apagadas com sucesso.");
         return ResponseEntity.status(HttpStatus.OK).build();
     }
