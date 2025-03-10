@@ -1,0 +1,6 @@
+spring:
+  application:
+    name: Api Transação
+server:
+  error:
+    include-stacktrace: never
