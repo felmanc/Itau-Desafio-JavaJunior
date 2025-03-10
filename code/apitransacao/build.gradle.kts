@@ -35,6 +35,9 @@ dependencies {
 	implementation ("org.springdoc:springdoc-openapi-starter-webmvc-api:2.8.3")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+    testImplementation("io.rest-assured:rest-assured:5.3.0")
+    testImplementation("org.junit.jupiter:junit-jupiter:5.8.2")
+    testImplementation("io.rest-assured:rest-assured-common:5.3.0")
 }
 
 tasks.withType<Test> {
