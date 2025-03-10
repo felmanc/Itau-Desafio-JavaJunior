@@ -23,7 +23,7 @@ public class EstatisticaController {
 
 	private final EstatisticaService estatisticaService;
 	
-    @Operation(summary = "Limpar Transações")
+    @Operation(summary = "Exibir estatísticas das transações")
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200", description = "Estatísticas calculadas com sucesso")
     })    

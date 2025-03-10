@@ -36,17 +36,12 @@ public class TransacaoController {
     public ResponseEntity<Void> AdicionarTransacao(@RequestBody TransacaoDTO dto) {
         log.info("Requisição para adicionar transação: {}", dto);
 
-        try {
-            transacoesService.AdicionarTransacao(dto);
-            log.info("Transação criada com sucesso: {}", dto);
-            return ResponseEntity.status(HttpStatus.CREATED).build();
-        } catch (Exception e) {
-            log.error("Erro ao adicionar transação: {}", dto, e);
-            throw e; // Rethrow or handle as needed
-        }
+        transacoesService.AdicionarTransacao(dto);
+        log.info("Transação criada com sucesso: {}", dto);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
-    @Operation(summary = "Limpar Transações")
+    @Operation(summary = "Limpar transações existentes")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Todas as informações foram apagadas com sucesso")
     })
@@ -54,13 +49,8 @@ public class TransacaoController {
     public ResponseEntity<Void> LimparTransacoes() {
         log.info("Requisição para limpar transações");
 
-        try {
-            transacoesService.LimparTransacoes();
-            log.info("Todas as transações foram apagadas com sucesso.");
-            return ResponseEntity.status(HttpStatus.OK).build();
-        } catch (Exception e) {
-            log.error("Erro ao limpar transações", e);
-            throw e; // Rethrow or handle as needed
-        }
+        transacoesService.LimparTransacoes();
+        log.info("Todas as transações foram apagadas com sucesso.");
+        return ResponseEntity.status(HttpStatus.OK).build();
     }
 }
