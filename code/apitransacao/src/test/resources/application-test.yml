@@ -1,0 +1,8 @@
+# application.yml
+server:
+  error:
+    include-stacktrace: never
+  port: 8888  # Porta do servidor
+spring:
+  main:
+    web-application-type: SERVLET

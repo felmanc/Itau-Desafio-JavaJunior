@@ -6,24 +6,23 @@ import java.time.OffsetDateTime;
 import java.time.format.DateTimeFormatter;
 
 import org.hamcrest.Matchers;
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.test.context.ActiveProfiles;
 
-import io.restassured.RestAssured;
+import br.com.felmanc.configs.TestConfigs;
 import io.restassured.http.ContentType;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
+@ActiveProfiles("test")
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
+@TestMethodOrder(OrderAnnotation.class)
 public class TransacaoControllerTest {
-
-    @BeforeEach
-    public void setup() {
-        RestAssured.baseURI = "http://localhost:8080"; // URL da API
-        log.info("Configuração inicial dos testes concluída.");
-    }
-
     
     @Test
 	@Order(1)
@@ -34,6 +33,7 @@ public class TransacaoControllerTest {
 
         given()
             .log().all()
+	        .port(TestConfigs.SERVER_PORT)
             .contentType(ContentType.JSON)
             .body(validJson)
         .when()
@@ -54,6 +54,7 @@ public class TransacaoControllerTest {
 
         given()
             .log().all()
+	        .port(TestConfigs.SERVER_PORT)
             .contentType(ContentType.JSON)
             .body(invalidJson)
         .when()
@@ -74,6 +75,7 @@ public class TransacaoControllerTest {
 
         given()
             .log().all()
+	        .port(TestConfigs.SERVER_PORT)
             .contentType(ContentType.JSON)
             .body(invalidJson)
         .when()
@@ -93,6 +95,7 @@ public class TransacaoControllerTest {
 
         given()
             .log().all()
+	        .port(TestConfigs.SERVER_PORT)
             .contentType(ContentType.JSON)
             .body(invalidJson)
         .when()
@@ -112,6 +115,7 @@ public class TransacaoControllerTest {
 
         given()
             .log().all()
+	        .port(TestConfigs.SERVER_PORT)
             .contentType(ContentType.JSON)
             .body(invalidJson)
         .when()
@@ -132,6 +136,7 @@ public class TransacaoControllerTest {
 
         given()
             .log().all()
+	        .port(TestConfigs.SERVER_PORT)
             .contentType(ContentType.JSON)
             .body(invalidJson)
         .when()
@@ -152,6 +157,7 @@ public class TransacaoControllerTest {
 
         given()
         .log().all()        
+        .port(TestConfigs.SERVER_PORT)
             .contentType(ContentType.JSON)
             .body(validJson)     
         .when()
@@ -171,6 +177,7 @@ public class TransacaoControllerTest {
 
         given()
             .log().all()
+	        .port(TestConfigs.SERVER_PORT)
             .contentType(ContentType.JSON)
             .body(invalidJson)
         .when()
@@ -190,6 +197,7 @@ public class TransacaoControllerTest {
 
 		given()
             .log().all()
+	        .port(TestConfigs.SERVER_PORT)
 	        .when()
 	        .delete("/transacao")
 	        .then()

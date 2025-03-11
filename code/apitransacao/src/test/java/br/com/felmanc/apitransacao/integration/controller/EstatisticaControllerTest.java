@@ -7,23 +7,23 @@ import java.time.OffsetDateTime;
 import java.time.format.DateTimeFormatter;
 
 import org.hamcrest.Matchers;
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.test.context.ActiveProfiles;
 
-import io.restassured.RestAssured;
+import br.com.felmanc.configs.TestConfigs;
 import io.restassured.http.ContentType;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
+@ActiveProfiles("test")
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
+@TestMethodOrder(OrderAnnotation.class)
 public class EstatisticaControllerTest {
-
-    @BeforeEach
-    public void setup() {
-        RestAssured.baseURI = "http://localhost:8080"; // URL da API
-        log.info("Configuração inicial dos testes concluída.");
-    }
 
 	@Test
 	@Order(1)
@@ -31,6 +31,7 @@ public class EstatisticaControllerTest {
         log.info("Executando testCalcularEstatisticasSemTransacoes");
 		given()
             .log().all()
+	        .port(TestConfigs.SERVER_PORT)
         .when()
         .delete("/transacao")
         .then()
@@ -39,6 +40,7 @@ public class EstatisticaControllerTest {
 		
 		given()
             .log().all()
+	        .port(TestConfigs.SERVER_PORT)
 	        .when()
 	        .get("/estatistica")
 	        .then()
@@ -61,6 +63,7 @@ public class EstatisticaControllerTest {
 
         given()
             .log().all()
+	        .port(TestConfigs.SERVER_PORT)
             .contentType(ContentType.JSON)
             .body(validJson)
         .when()
@@ -71,6 +74,7 @@ public class EstatisticaControllerTest {
 		
 		given()
             .log().all()
+	        .port(TestConfigs.SERVER_PORT)
 	        .when()
 	        .delete("/transacao")
 	        .then()
@@ -80,6 +84,7 @@ public class EstatisticaControllerTest {
 	    
 	    given()
             .log().all()
+	        .port(TestConfigs.SERVER_PORT)
         .when()
         .get("/estatistica")
         .then()
@@ -103,6 +108,7 @@ public class EstatisticaControllerTest {
         // Garante que não haja transações
 		given()
             .log().all()
+	        .port(TestConfigs.SERVER_PORT)
         .when()
         .delete("/transacao")
         .then()
@@ -117,6 +123,7 @@ public class EstatisticaControllerTest {
 	    // Envia uma transação válida
         given()
 	        .log().all()
+	        .port(TestConfigs.SERVER_PORT)
 	        .contentType(ContentType.JSON)
 	        .body(validJson1)
 	    .when()
@@ -132,6 +139,7 @@ public class EstatisticaControllerTest {
 	    // Envia uma transação válida
         given()
 	        .log().all()
+	        .port(TestConfigs.SERVER_PORT)
 	        .contentType(ContentType.JSON)
 	        .body(validJson2)
 	    .when()
@@ -143,6 +151,7 @@ public class EstatisticaControllerTest {
         // Valida estatistica com 1 transação
 	    given()
 	        .log().all()
+	        .port(TestConfigs.SERVER_PORT)
 	        .contentType(ContentType.JSON)
 	    .when()
 	        .get("/estatistica")
@@ -158,6 +167,7 @@ public class EstatisticaControllerTest {
         // Valida estatistica com 2 transações
 	    given()
 	        .log().all()
+	        .port(TestConfigs.SERVER_PORT)
 	        .contentType(ContentType.JSON)
         .when()
 	        .get("/estatistica?intervalo=120")
