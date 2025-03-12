@@ -1,5 +1,7 @@
 package br.com.felmanc.apitransacao.exceptions;
 
+import java.util.Map;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -15,20 +17,33 @@ public class GlobalExceptionHandler {
     public ResponseEntity<Object> handleJsonParseException(HttpMessageNotReadableException ex) {
         return ResponseEntity
                 .status(HttpStatus.BAD_REQUEST)
-                .body("");
+                .body(Map.of(
+                        "error", "BAD_REQUEST",
+                        "message", "O JSON enviado não pôde ser lido. Verifique a formatação da requisição.",
+                        "details", ex.getMessage()
+                ));
     }
         
     @ExceptionHandler(TransacaoInvalidaException.class)
     public ResponseEntity<Object> handleTransacaoInvalida(TransacaoInvalidaException ex) {
         return ResponseEntity
                 .status(HttpStatus.UNPROCESSABLE_ENTITY)
-                .body("");
+                .body(Map.of(
+                        "error", "UNPROCESSABLE_ENTITY",
+                        "message", "A transação enviada é inválida. Consulte os critérios necessários.",
+                        "details", ex.getMessage()
+                ));
     }    
 
     @ExceptionHandler(RuntimeException.class)
     public ResponseEntity<Object> handleGenericException(RuntimeException e) {
         return ResponseEntity
                 .status(HttpStatus.INTERNAL_SERVER_ERROR)
-                .body("");
+                .body(Map.of(
+                        "error", "INTERNAL_SERVER_ERROR",
+                        "message", "Ocorreu um erro inesperado. Por favor, tente novamente mais tarde.",
+                        "details", e.getMessage()
+                ));
     }
 }
+

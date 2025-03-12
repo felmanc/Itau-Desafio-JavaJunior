@@ -46,7 +46,7 @@ class TransacoesServiceTest {
     void deveLancarExcecaoParaValorNulo() {
         TransacaoDTO dto = new TransacaoDTO(null, OffsetDateTime.now().minusMinutes(1));
         TransacaoInvalidaException excecao = assertThrows(TransacaoInvalidaException.class, () -> transacoesService.adicionarTransacao(dto));
-        assertNull(excecao.getMessage());
+        assertEquals("O valor da transação não pode ser nulo.", excecao.getMessage());
     }
 
     @Test
@@ -54,7 +54,8 @@ class TransacoesServiceTest {
     void deveLancarExcecaoParaDataNula() {
         TransacaoDTO dto = new TransacaoDTO(100.0, null);
         TransacaoInvalidaException excecao = assertThrows(TransacaoInvalidaException.class, () -> transacoesService.adicionarTransacao(dto));
-        assertNull(excecao.getMessage());
+        assertEquals("A data da transação não pode ser nula.", excecao.getMessage());
+
     }
 
     @Test
@@ -62,7 +63,7 @@ class TransacoesServiceTest {
     void deveLancarExcecaoParaValorNegativo() {
         TransacaoDTO dto = new TransacaoDTO(-50.0, OffsetDateTime.now().minusMinutes(1));
         TransacaoInvalidaException excecao = assertThrows(TransacaoInvalidaException.class, () -> transacoesService.adicionarTransacao(dto));
-        assertNull(excecao.getMessage());
+        assertEquals("O valor da transação não pode ser negativo.", excecao.getMessage());
     }
 
     @Test
@@ -70,7 +71,7 @@ class TransacoesServiceTest {
     void deveLancarExcecaoParaDataFutura() {
         TransacaoDTO dto = new TransacaoDTO(100.0, OffsetDateTime.now().plusMinutes(10));
         TransacaoInvalidaException excecao = assertThrows(TransacaoInvalidaException.class, () -> transacoesService.adicionarTransacao(dto));
-        assertNull(excecao.getMessage());
+        assertEquals("A data da transação deve estar no passado.", excecao.getMessage());
     }
 
     @Test

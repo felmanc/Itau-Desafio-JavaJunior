@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 public class TransacaoInvalidaException extends RuntimeException {
 	private static final long serialVersionUID = 1L;
 
-    public TransacaoInvalidaException() {
-        super();
+	public TransacaoInvalidaException(String mensagem) {
+        super(mensagem);
     }
 }

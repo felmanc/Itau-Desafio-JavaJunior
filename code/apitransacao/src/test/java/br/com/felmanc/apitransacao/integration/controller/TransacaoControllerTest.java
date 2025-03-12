@@ -1,6 +1,8 @@
 package br.com.felmanc.apitransacao.integration.controller;
 
 import static io.restassured.RestAssured.given;
+import static org.hamcrest.CoreMatchers.containsString;
+import static org.hamcrest.CoreMatchers.equalTo;
 
 import java.time.OffsetDateTime;
 import java.time.format.DateTimeFormatter;
@@ -62,7 +64,9 @@ public class TransacaoControllerTest {
         .then()
             .log().all()
             .statusCode(422)
-            .body(Matchers.blankOrNullString());
+            .body("error", equalTo("UNPROCESSABLE_ENTITY"))
+            .body("message", equalTo("A transação enviada é inválida. Consulte os critérios necessários."))
+            .body("details", equalTo("O valor da transação não pode ser negativo."));
 
 		log.info("Finalizado testAdicionarTransacaoValorNegativo");
     }
@@ -83,7 +87,9 @@ public class TransacaoControllerTest {
         .then()
             .log().all()
             .statusCode(422)
-            .body(Matchers.blankOrNullString());
+            .body("error", equalTo("UNPROCESSABLE_ENTITY"))
+            .body("message", equalTo("A transação enviada é inválida. Consulte os critérios necessários."))
+            .body("details", equalTo("O valor da transação não pode ser nulo."));
 
 		log.info("Finalizado testAdicionarTransacaoValorInexistente");
     }
@@ -103,7 +109,9 @@ public class TransacaoControllerTest {
         .then()
             .log().all()
             .statusCode(422)
-            .body(Matchers.blankOrNullString());
+            .body("error", equalTo("UNPROCESSABLE_ENTITY"))
+            .body("message", equalTo("A transação enviada é inválida. Consulte os critérios necessários."))
+            .body("details", equalTo("A data da transação deve estar no passado."));
 
 		log.info("Finalizado testAdicionarTransacaoDataFutura");
     }
@@ -123,7 +131,9 @@ public class TransacaoControllerTest {
         .then()
             .log().all()
             .statusCode(422)
-            .body(Matchers.blankOrNullString());
+        .body("error", equalTo("UNPROCESSABLE_ENTITY"))
+        .body("message", equalTo("A transação enviada é inválida. Consulte os critérios necessários."))
+        .body("details", equalTo("A data da transação não pode ser nula."));
 
 		log.info("Finalizado testAdicionarTransacaoDataInexistente");
     }    
@@ -144,7 +154,9 @@ public class TransacaoControllerTest {
         .then()
             .log().all()
             .statusCode(400)
-            .body(Matchers.blankOrNullString());
+            .body("error", equalTo("BAD_REQUEST"))
+            .body("message", equalTo("O JSON enviado não pôde ser lido. Verifique a formatação da requisição."))
+            .body("details", containsString("Unexpected character (',' (code 44))"));
 
 		log.info("Finalizado testAdicionarTransacaoJsonInvalido");
     }    
@@ -185,7 +197,9 @@ public class TransacaoControllerTest {
         .then()
             .log().all()
             .statusCode(400)
-            .body(Matchers.blankOrNullString());
+            .body("error", equalTo("BAD_REQUEST"))
+            .body("message", equalTo("O JSON enviado não pôde ser lido. Verifique a formatação da requisição."))
+            .body("details", containsString("Cannot deserialize value of type `java.time.OffsetDateTime`"));
 
 		log.info("Finalizado testAdicionarTransacaoError");
     }

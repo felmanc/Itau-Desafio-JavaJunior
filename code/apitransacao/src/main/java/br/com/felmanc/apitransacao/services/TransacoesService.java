@@ -23,22 +23,22 @@ public class TransacoesService {
 
         if (dto.valor() == null) {
             log.info("Não permitida transação com valor nulo.");
-            throw new TransacaoInvalidaException();
+            throw new TransacaoInvalidaException("O valor da transação não pode ser nulo.");
         }         
         
         if (dto.dataHora() == null) {
             log.info("Não permitida transação com data nula.");
-            throw new TransacaoInvalidaException();
+            throw new TransacaoInvalidaException("A data da transação não pode ser nula.");
         }
 
         if (dto.valor() < 0) {
             log.info("Não permitida transação com valor negativo.");
-            throw new TransacaoInvalidaException();
+            throw new TransacaoInvalidaException("O valor da transação não pode ser negativo.");
         }
 
         if (dto.dataHora().isAfter(OffsetDateTime.now())) {
             log.info("Não permitida transação com data futura.");
-            throw new TransacaoInvalidaException();
+            throw new TransacaoInvalidaException("A data da transação deve estar no passado.");
         }
 
         transacoes.add(dto);

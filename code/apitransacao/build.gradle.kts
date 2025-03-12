@@ -38,6 +38,7 @@ dependencies {
     testImplementation("io.rest-assured:rest-assured:5.3.0")
     testImplementation("org.junit.jupiter:junit-jupiter:5.8.2")
     testImplementation("io.rest-assured:rest-assured-common:5.3.0")
+    testImplementation("org.hamcrest:hamcrest:2.2")
 }
 
 tasks.withType<Test> {
